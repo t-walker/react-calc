@@ -23,6 +23,10 @@ body{
   outline: none;
 }
 
+.calculatorButton.buttonClr{
+  font-size: 14px;
+}
+
   .calculatorButton:hover{
     background: #e6e6e6;
     border-color: #c5c5c5;
@@ -65,7 +69,7 @@ body{
   }
 
 .calculatorButton.buttonEql{
-  background: #82e1fc;
+  background: #51ccef;
 }
 
   .calculatorButton.buttonEql:hover{
@@ -73,13 +77,14 @@ body{
     border-color: #68a9bb;
   }
 
-  .calculatorButton.buttonEql:active{
-    border-color: #7dcfe6;
+  .calculatorButton.buttonEql:focus{
+    border-color: #41a5c1;
   }
 
   .calculatorButton.buttonEql:active{
     background: #23b0d8;
   }
+  
 
 .calculatorHeader{
   padding: 10px 5px;
