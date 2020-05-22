@@ -23,6 +23,10 @@ body{
   outline: none;
 }
 
+.calculatorButton.buttonClr{
+  font-size: 14px;
+}
+
   .calculatorButton:hover{
     background: #e6e6e6;
     border-color: #c5c5c5;

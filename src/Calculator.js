@@ -7,7 +7,7 @@ class Calculator extends React.Component{
     buttonData = {
         0: {
             value: 'AC',
-            class: '',
+            class: 'buttonClr',
             command: 'COMMAND_CLR',
             break: false,
             double: false
