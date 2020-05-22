@@ -44,6 +44,19 @@ class Calculator extends React.Component{
 
     doubleWidth = [16];
 
+    keyCodes = {
+        48: 0,
+        49: 1,
+        50: 2,
+        51: 3,
+        52: 4,
+        53: 5,
+        54: 6,
+        55: 7,
+        56: 8,
+        57: 9
+    }
+
     constructor(props) {
         super(props);
         this.state = {currentValue: 0, lastNum: null, currentOp: null, displayIsOld: false}
@@ -172,9 +185,17 @@ class Calculator extends React.Component{
     }
 
     render(){
+        var givenLastNumber = null;
+        if(this.state.lastNum != null){
+            givenLastNumber = this.state.lastNum;
+            if(this.state.currentOp != null){
+                givenLastNumber += " " + this.state.currentOp;
+            }
+        }
+
         return(
             <div className="calculatorContainer">
-                <CalculatorHeader value={this.state.currentValue}></CalculatorHeader>
+                <CalculatorHeader value={this.state.currentValue} lastNumber={givenLastNumber}></CalculatorHeader>
                 {this.renderButtons()}
             </div>
         )
