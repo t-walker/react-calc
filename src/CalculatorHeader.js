@@ -10,7 +10,7 @@ class CalculatorHeader extends React.Component{
             <div className="calculatorHeader">
                 <p className={pClassName}>{dLastNumber}</p>
                 <h1>
-                    {this.props.value}
+                    {this.props.valueString}
                 </h1>
             </div>
         );

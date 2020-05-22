@@ -4,45 +4,141 @@ import CalculatorHeader from './CalculatorHeader.js'
 
 class Calculator extends React.Component{
 
-    buttons = {
-        0: 'AC',
-        1: '±',
-        2: '%',
-        3: '÷',
-        4: '7',
-        5: '8',
-        6: '9',
-        7: 'x',
-        8: '4',
-        9: '5',
-        10: '6',
-        11: '-',
-        12: '1',
-        13: '2',
-        14: '3',
-        15: '+',
-        16: '0',
-        17: '.',
-        18: '='
-    };
-
-    internalClassMap = {
-        'buttonNumber': [4, 5, 6, 8, 9, 10, 12, 13, 14, 16],
-        'buttonOp': [3, 7, 11, 15],
-        'buttonEql': [18]
+    buttonData = {
+        0: {
+            value: 'AC',
+            class: '',
+            command: 'COMMAND_CLR',
+            break: false,
+            double: false
+        },
+        1: {
+            value: '±',
+            class: '',
+            command: 'COMMAND_FLP',
+            break: false,
+            double: false
+        },
+        2: {
+            value: '%',
+            class: '',
+            command: 'COMMAND_OPR',
+            break: false,
+            double: false
+        },
+        3: {
+            value: '÷',
+            class: 'buttonOp',
+            command: 'COMMAND_OPR',
+            break: true,
+            double: false
+        },
+        4: {
+            value: 7,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        5: {
+            value: 8,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        6: {
+            value: 9,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        7: {
+            value: 'x',
+            class: 'buttonOp',
+            command: 'COMMAND_OPR',
+            break: true,
+            double: false
+        },
+        8: {
+            value: 4,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        9: {
+            value: 5,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        10: {
+            value: 6,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        11: {
+            value: '-',
+            class: 'buttonOp',
+            command: 'COMMAND_OPR',
+            break: true,
+            double: false
+        },
+        12: {
+            value: 1,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        13: {
+            value: 2,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        14: {
+            value: 3,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: false
+        },
+        15: {
+            value: '+',
+            class: 'buttonOp',
+            command: 'COMMAND_OPR',
+            break: true,
+            double: false
+        },
+        16: {
+            value: 0,
+            class: 'buttonNumber',
+            command: 'COMMAND_NBR',
+            break: false,
+            double: true
+        },
+        17: {
+            value: '.',
+            class: '',
+            command: 'COMMAND_DEC',
+            break: false,
+            double: false
+        },
+        18: {
+            value: '=',
+            class: 'buttonEql',
+            command: 'COMMAND_EQL',
+            break: false,
+            double: false
+        }
     }
-
-    commandMap = {
-        'COMMAND_CLR': [0],
-        'COMMAND_NBR': [4, 5, 6, 8, 9, 10, 12, 13, 14, 16],
-        'COMMAND_OPR': [3, 7, 11, 15, 2],
-        'COMMAND_EQL': [18],
-        'COMMAND_FLP': [1]
-    }
-
-    breaks = [ 3, 7, 11, 15 ];
-
-    doubleWidth = [16];
 
     keyCodes = {
         48: 0,
@@ -59,28 +155,25 @@ class Calculator extends React.Component{
 
     constructor(props) {
         super(props);
-        this.state = {currentValue: 0, lastNum: null, currentOp: null, displayIsOld: false}
+        this.state = {
+            currentValue: 0, 
+            currentValueString: "0", 
+            lastNum: null, 
+            currentOp: null, 
+            displayIsOld: false
+        }
     }
 
-    handleButtonClick(key, value){
-        var command = '';
-
-        for(const[cmdKey, cmdKeyVals] of Object.entries(this.commandMap)){
-            if(cmdKeyVals.includes(Number(key))){
-                command = cmdKey;
-                break;
-            }
-        }
-
-        switch(command){
+    handleButtonClick(key){
+        switch(this.buttonData[key].command){
             case 'COMMAND_CLR':
                 this.commandClear();
                 break;
             case 'COMMAND_NBR':
-                this.commandAddNumber(Number(value));
+                this.commandAddNumber(key);
                 break;
             case 'COMMAND_OPR':
-                this.commandOperation(key, value);
+                this.commandOperation(key);
                 break;
             case 'COMMAND_EQL':
                 this.commandEqual();
@@ -88,60 +181,54 @@ class Calculator extends React.Component{
             case 'COMMAND_FLP':
                 this.commandFlipSign();
                 break;
+            case 'COMMAND_DEC':
+                this.commandDecimal();
+                break;
             default:
                 break;
         }
     }
 
-    renderButton(key, value){
-        const doubleWidth = this.doubleWidth.includes(Number(key));
-
-        var  internalClass = "";
-        for(const[cKey, cVal] of Object.entries(this.internalClassMap)){
-            if(cVal.includes(Number(key))){
-                internalClass = cKey;
-                break;
-            }
-        }
-
-        return <CalculatorButton key={key} value={value} doubleWidth={doubleWidth} currentOperation={this.state.currentOp} internalClass={internalClass} onClick={() => this.handleButtonClick(Number(key), value)}></CalculatorButton>
+    updateValue(value){
+        this.setState({
+            currentValue: Number(value),
+            currentValueString: String(value)
+        });
     }
 
-    renderButtons(){
-        const ret = [];
-        for(const [key, value] of Object.entries(this.buttons)){
-            ret.push(this.renderButton(key, value));
-            if(this.breaks.includes(Number(key))){
-                ret.push(<br key={"br" + key}/>);
-            }
-        }
-
-        return ret;
+    updateValue(value, displayIsOld){
+        this.setState({
+            currentValue: Number(value),
+            currentValueString: String(value),
+            displayIsOld: displayIsOld
+        });
     }
 
     commandClear(){
         this.setState({
             currentValue: 0,
+            currentValueString: "0",
             currentOp: null,
             displayIsOld: false,
             lastNum: null
         });
     }
 
-    commandAddNumber(number){
-        const currentVal = this.state.currentValue;
-        if(this.state.displayIsOld || currentVal === 0){
-            this.setState({currentValue: number, displayIsOld: false})
+    commandAddNumber(key){
+        if(this.state.displayIsOld || this.state.currentValueString === "0"){
+            this.updateValue(this.buttonData[key].value, false);
         }else{
-            this.setState({currentValue: Number(String(currentVal) + String(number)) });
+            this.updateValue(Number(this.state.currentValueString + String(this.buttonData[key].value)));
         }
     }
 
-    commandOperation(key, value){
+    commandOperation(key){
         this.setState({
-            currentOp: value,
+            currentOp: this.buttonData[key].value,
             displayIsOld: true,
-            lastNum: this.state.currentValue
+            lastNum: Number(this.state.currentValueString),
+            currentValue: 0,
+            currentValueString: "0"
         });
     }
 
@@ -172,16 +259,35 @@ class Calculator extends React.Component{
             this.setState({
                 currentOp: null,
                 currentValue: newVal,
+                currentValueString: String(newVal),
                 displayIsOld: true,
                 lastNum: null
             });
         }
     }
 
-    commandFlipSign(){
+    commandFlipSign(data){
         this.setState({
             currentValue: this.state.currentValue * -1
         });
+    }
+
+    commandDecimal(data){
+        this.setState({
+            currentValueString: this.state.currentValueString + "."
+        })
+    }
+
+    renderButtons(){
+        const ret = [];
+        for(const [key, value] of Object.entries(this.buttonData)){
+            ret.push(<CalculatorButton key={key} value={value.value} doubleWidth={value.double} currentOperation={this.state.currentOp} internalClass={value.class} onClick={() => this.handleButtonClick(Number(key))}></CalculatorButton>);
+            if(value.break){
+                ret.push(<br key={"br" + key}/>);
+            }
+        }
+
+        return ret;
     }
 
     render(){
@@ -195,7 +301,7 @@ class Calculator extends React.Component{
 
         return(
             <div className="calculatorContainer">
-                <CalculatorHeader value={this.state.currentValue} lastNumber={givenLastNumber}></CalculatorHeader>
+                <CalculatorHeader value={this.state.currentValue} valueString={this.state.currentValueString} lastNumber={givenLastNumber}></CalculatorHeader>
                 {this.renderButtons()}
             </div>
         )
