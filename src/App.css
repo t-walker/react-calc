@@ -1,38 +1,87 @@
-.App {
-  text-align: center;
+body{
+  background: #f1f1f1;
+  font-family: myriad-pro, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.calculatorContainer{
+  width: 208px;
+  margin: 25px auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.calculatorButton{
+  transition: all .08s;
+  width: 50px;
+  height: 50px;
+  margin: 1px;
+  border: 2px solid transparent;
+  background: #FFF;
+  border-radius: 0px;
+  font-weight: 700;
+  font-size: 14px;
+  outline: none;  
+}
+
+  .calculatorButton:hover{
+    background: #e6e6e6;
+    border-color: #c5c5c5;
   }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .calculatorButton:focus{
+    border-color: #c5c5c5;
   }
-  to {
-    transform: rotate(360deg);
+
+  .calculatorButton:active{
+    background: #d2d2d2;
+    border-color: #e4e4e4;
+    margin: 5px;
+    width: 42px;
+    height: 40px;
+    font-size: 12px;
   }
+
+  .calculatorButton.double{
+    width: 102px;
+  }
+
+  .calculatorButton.double:active{
+    width: 94px;
+  }
+
+  
+.calculatorButton.buttonOp {
+  background: #dadada;
+}
+
+  .calculatorButton.buttonOp:hover{
+    background: #c1c1c1;
+    border-color: #ababab;
+  }  
+
+  .calculatorButton.buttonOp.opActive, .calculatorButton.buttonOp:active{
+    background: #b9efff;
+    border-color: #aadcea;
+  }
+
+.calculatorButton.buttonEql{
+  background: #c1c1c1;
+}
+
+  .calculatorButton.buttonEql:hover{
+    background: #9e9e9e;
+    border-color: #757575;
+  }
+
+  .calculatorButton.buttonEql:active{
+    background: #757575;
+  }
+
+.calculatorHeader{
+  padding: 10px 5px;
+}
+
+.calculatorHeader h1{
+  margin: 0;
+  text-align: right;
 }
