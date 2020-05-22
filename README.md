@@ -1,4 +1,4 @@
 ### ReactJS Calculator
 Simple calculator in react
 
-![](images/screenshot.png?raw=true)
+![](images/screenshot.jpg?raw=true)
