@@ -36,7 +36,8 @@ class Calculator extends React.Component{
         'COMMAND_CLR': [ 0 ],
         'COMMAND_NBR': [4, 5, 6, 8, 9, 10, 12, 13, 14, 16],
         'COMMAND_OPR': [3, 7, 11, 15, 2],
-        'COMMAND_EQL': [18]
+        'COMMAND_EQL': [18],
+        'COMMAND_FLP': [1]
     }
 
     breaks = [ 3, 7, 11, 15 ];
@@ -70,6 +71,9 @@ class Calculator extends React.Component{
                 break;
             case 'COMMAND_EQL':
                 this.commandEqual();
+                break;
+            case 'COMMAND_FLP':
+                this.commandFlipSign();
                 break;
             default:
                 break;
@@ -159,6 +163,12 @@ class Calculator extends React.Component{
                 lastNum: null
             });
         }
+    }
+
+    commandFlipSign(){
+        this.setState({
+            currentValue: this.state.currentValue * -1
+        });
     }
 
     render(){
