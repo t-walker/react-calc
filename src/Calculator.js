@@ -33,7 +33,7 @@ class Calculator extends React.Component{
     }
 
     commandMap = {
-        'COMMAND_CLR': [ 0 ],
+        'COMMAND_CLR': [0],
         'COMMAND_NBR': [4, 5, 6, 8, 9, 10, 12, 13, 14, 16],
         'COMMAND_OPR': [3, 7, 11, 15, 2],
         'COMMAND_EQL': [18],
